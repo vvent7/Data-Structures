@@ -6,7 +6,7 @@ The implementation is divided in three main versions:
 
 1. Preliminary (`veb_pre`): preliminary version of vEB tree. Implements basic concepts as binary size and bitwise manipulation for simplicity and speed, *summary* structure and all operations of vEB.
 2. Recursive (`veb_rec`): improvement of previous implementation, defining a recursive structure inside each cluster. This optimization speeds up the operations of the tree.
-3. Final (`veb`): further improvement of previous recursive implementation. These improvements aims to achieve the final complexity of $O(log\,log\,u)$ in the operations.
+3. Final (`veb`): further improvement of previous recursive implementation. These improvements aims to achieve the final complexity of $O(log  log  u)$ in the operations.
 
 Furthermore, there is some variations of the cited implementations. Originally, **the **vEB** tree does not allow repeated keys** (like a `set`). So, for each version, there is an alternative version that **allows repeated keys** (like a `multiset`). These variations are named `multi_<name>`, where `<name>` is the name of the respective version.
 

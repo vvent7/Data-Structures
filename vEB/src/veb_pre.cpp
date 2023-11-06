@@ -116,3 +116,24 @@ int VebPre::maximum(){
 
   return -1; // not found
 }
+
+int VebPre::extract_min(){
+  if(n==0) return -1; // empty set
+
+  for(int i=0; i<uSqrt; i++){
+    if(!summary[i]) continue;
+
+    for(int j=0; j<uSqrt; j++){
+      if(a[i*uSqrt+j]){
+        a[i*uSqrt+j] = false; //removed
+
+        while(j<uSqrt && !a[i*uSqrt+j]) j++;
+        summary[i] = j<uSqrt;
+        
+        return i*uSqrt+j;
+      }
+    }
+  }
+
+  return -1;
+}
