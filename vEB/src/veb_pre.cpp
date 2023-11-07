@@ -1,24 +1,25 @@
 #include "veb_pre.h"
 #include "utils.h"
 
-VebPre::VebPre(size_t u):
-  k((first_power_of_2(u)+1) >> 1),
+VebPre::VebPre(int u):
+  k((first_power_of_2(u)+1) >> 1),  // k even
   u(1<<(k<<1)),
   uSqrt(1<<k),
   n(0),
   a(this->u, false),
   summary(uSqrt, false){ }
 
-void VebPre::insert(int x){
-  if(a[x]) return; // already inserted
+bool VebPre::insert(int x){
+  if(a[x]) return false; // already inserted
 
   int i = x/uSqrt; // high order bits
   a[x] = summary[i] = true;
   n++;
+  return true; // inserted
 }
 
-void VebPre::remove(int x){
-  if(!a[x]) return; // not inserted
+bool VebPre::remove(int x){
+  if(!a[x]) return false; // not inserted
 
   a[x] = false;
   n--;
@@ -33,9 +34,11 @@ void VebPre::remove(int x){
     }
   }
   summary[i] = oneTrue;
+
+  return true; // removed
 }
 
-size_t VebPre::size(){
+int VebPre::size(){
   return n;
 }
 
@@ -126,9 +129,11 @@ int VebPre::extract_min(){
     for(int j=0; j<uSqrt; j++){
       if(a[i*uSqrt+j]){
         a[i*uSqrt+j] = false; //removed
+        n--; // decrement size
 
-        while(j<uSqrt && !a[i*uSqrt+j]) j++;
-        summary[i] = j<uSqrt;
+        int j2 = j+1;
+        while(j2<uSqrt && !a[i*uSqrt+j2]) j2++;
+        summary[i] = j2<uSqrt;
         
         return i*uSqrt+j;
       }

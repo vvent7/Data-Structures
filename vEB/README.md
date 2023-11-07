@@ -37,7 +37,7 @@ Each operation line starts with an integer $op$, the operation type. Depending o
 
 ### Output
 
-For each operation that returns a value ($op>=3$) print the result and break a line `\n`.
+For each operation that returns a value print the result and break a line `\n`.
 
 ## Acknowledgments
 

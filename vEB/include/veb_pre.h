@@ -1,9 +1,10 @@
 
 #include <vector>
 #include <cstddef>
+#include "_veb_base.h"
 
 // van Emde Boas (preliminary)
-class VebPre {
+class VebPre : public _veb_base{
 private:
   const int k, u, uSqrt;
   int n;
@@ -17,11 +18,11 @@ private:
 
 public:
   // constructor for universe size u [0, u-1]
-  VebPre(size_t u);
+  VebPre(int u);
 
-  void insert(int x);
-  void remove(int x);
-  size_t size();
+  bool insert(int x);
+  bool remove(int x);
+  int size();
   bool member(int x);
   int successor(int x);
   int predecessor(int x);

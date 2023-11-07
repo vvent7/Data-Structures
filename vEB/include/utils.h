@@ -1,5 +1,3 @@
-
-
 // most significant bit index
 int msbi(int x);
 

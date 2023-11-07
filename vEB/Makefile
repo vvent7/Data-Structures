@@ -6,7 +6,8 @@ BUILD_PATH = build
 BIN_PATH = $(BUILD_PATH)/bin
 
 # executable # 
-BIN_NAME = runner
+BIN_NAME = veb
+BIN_TEST_GEN_NAME = gen
 
 # extensions #
 SRC_EXT = cpp
@@ -45,6 +46,8 @@ dirs:
 clean:
 	@echo "Deleting $(BIN_NAME) symlink"
 	@$(RM) $(BIN_NAME)
+	@echo "Deleting $(BIN_TEST_GEN_NAME) symlink"
+	@$(RM) $(BIN_TEST_GEN_NAME)
 	@echo "Deleting directories"
 	@$(RM) -r $(BUILD_PATH)
 	@$(RM) -r $(BIN_PATH)
@@ -70,3 +73,15 @@ $(BIN_PATH)/$(BIN_NAME): $(OBJECTS)
 $(BUILD_PATH)/%.o: $(SRC_PATH)/%.$(SRC_EXT)
 	@echo "Compiling: $< -> $@"
 	$(CXX) $(CXXFLAGS) $(INCLUDES) -MP -MMD -c $< -o $@
+
+.PHONY: test-gen
+
+
+$(BIN_PATH)/$(BIN_TEST_GEN_NAME): test_gen.cpp
+	@echo "Compiling: $< -> $@"
+	$(CXX) $(CXXFLAGS) -o $(BIN_PATH)/$(BIN_TEST_GEN_NAME) test_gen.cpp
+
+test-gen: dirs $(BIN_PATH)/$(BIN_TEST_GEN_NAME)
+	@echo "Making symlink: $(BIN_TEST_GEN_NAME) -> $(BIN_PATH)/$(BIN_TEST_GEN_NAME)"
+	@$(RM) $(BIN_TEST_GEN_NAME)
+	@ln -s $(BIN_PATH)/$(BIN_TEST_GEN_NAME) $(BIN_TEST_GEN_NAME)
