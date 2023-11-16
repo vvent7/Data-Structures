@@ -4,6 +4,7 @@ CXX ?= g++
 SRC_PATH = src
 BUILD_PATH = build
 BIN_PATH = $(BUILD_PATH)/bin
+TESTS_PATH = tests
 
 # executable # 
 BIN_NAME = veb
@@ -23,7 +24,7 @@ OBJECTS = $(SOURCES:$(SRC_PATH)/%.$(SRC_EXT)=$(BUILD_PATH)/%.o)
 DEPS = $(OBJECTS:.o=.d)
 
 # flags #
-COMPILE_FLAGS = -std=c++11 -Wall -Wextra -g
+COMPILE_FLAGS = -std=c++17 -Wall -Wextra -g -O3
 INCLUDES = -I include/ -I /usr/local/include
 # Space-separated pkg-config libraries used by this project
 LIBS =
@@ -47,7 +48,7 @@ clean:
 	@echo "Deleting $(BIN_NAME) symlink"
 	@$(RM) $(BIN_NAME)
 	@echo "Deleting $(BIN_TEST_GEN_NAME) symlink"
-	@$(RM) $(BIN_TEST_GEN_NAME)
+	@$(RM) $(TESTS_PATH)/$(BIN_TEST_GEN_NAME)
 	@echo "Deleting directories"
 	@$(RM) -r $(BUILD_PATH)
 	@$(RM) -r $(BIN_PATH)
@@ -74,14 +75,14 @@ $(BUILD_PATH)/%.o: $(SRC_PATH)/%.$(SRC_EXT)
 	@echo "Compiling: $< -> $@"
 	$(CXX) $(CXXFLAGS) $(INCLUDES) -MP -MMD -c $< -o $@
 
-.PHONY: test-gen
 
-
-$(BIN_PATH)/$(BIN_TEST_GEN_NAME): test_gen.cpp
-	@echo "Compiling: $< -> $@"
-	$(CXX) $(CXXFLAGS) -o $(BIN_PATH)/$(BIN_TEST_GEN_NAME) test_gen.cpp
-
-test-gen: dirs $(BIN_PATH)/$(BIN_TEST_GEN_NAME)
+# TESTS #
+.PHONY: tests
+tests: dirs $(BIN_PATH)/$(BIN_TEST_GEN_NAME)
 	@echo "Making symlink: $(BIN_TEST_GEN_NAME) -> $(BIN_PATH)/$(BIN_TEST_GEN_NAME)"
-	@$(RM) $(BIN_TEST_GEN_NAME)
-	@ln -s $(BIN_PATH)/$(BIN_TEST_GEN_NAME) $(BIN_TEST_GEN_NAME)
+	@$(RM) $(TESTS_PATH)/$(BIN_TEST_GEN_NAME)
+	@ln -s $(CURDIR)/$(BIN_PATH)/$(BIN_TEST_GEN_NAME) $(CURDIR)/$(TESTS_PATH)/$(BIN_TEST_GEN_NAME)
+
+$(BIN_PATH)/$(BIN_TEST_GEN_NAME): $(TESTS_PATH)/test_gen.cpp
+	@echo "Compiling: $< -> $@"
+	$(CXX) $(CXXFLAGS) -o $(BIN_PATH)/$(BIN_TEST_GEN_NAME) $(TESTS_PATH)/test_gen.cpp

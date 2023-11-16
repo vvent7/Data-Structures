@@ -1,4 +1,5 @@
-#include <cstddef>
+#ifndef VEB_BASE_H
+#define VEB_BASE_H
 
 // van Emde Boas (base)
 class _veb_base {
@@ -8,9 +9,6 @@ public:
 
   // Removes x from the set. Returns true if x was removed, false if x was not in the set.
   virtual bool remove(int x) = 0;
-
-  // Returns the number of elements in the set.
-  virtual int size() = 0;
 
   // Returns true if x is in the set, false otherwise.
   virtual bool member(int x) = 0;
@@ -30,3 +28,5 @@ public:
   // Removes and returns the minimum element in the set
   virtual int extract_min() = 0;
 };
+
+#endif

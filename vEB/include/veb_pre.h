@@ -1,3 +1,5 @@
+#ifndef VEB_PRE_H
+#define VEB_PRE_H
 
 #include <vector>
 #include <cstddef>
@@ -20,13 +22,15 @@ public:
   // constructor for universe size u [0, u-1]
   VebPre(int u);
 
-  bool insert(int x);
-  bool remove(int x);
+  bool insert(int x) override;
+  bool remove(int x) override;
   int size();
-  bool member(int x);
-  int successor(int x);
-  int predecessor(int x);
-  int minimum();
-  int maximum();
-  int extract_min();
+  bool member(int x) override;
+  int successor(int x) override;
+  int predecessor(int x) override;
+  int minimum() override;
+  int maximum() override;
+  int extract_min() override;
 };
+
+#endif

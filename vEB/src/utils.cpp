@@ -11,3 +11,13 @@ int first_power_of_2(int x){
       ? msbi(x)
       : msbi(x)+1;
 }
+
+int upper_sqrt(int x){
+  x = first_power_of_2(x);
+  return 1 << ((x+1)>>1);
+}
+
+int lower_sqrt(int x){
+  x = first_power_of_2(x);
+  return 1 << (x>>1);
+}

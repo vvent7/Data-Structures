@@ -31,8 +31,5 @@
 *.out
 *.app
 
-build
-out
-sol
-in
-runner
+# custom
+.vscode
