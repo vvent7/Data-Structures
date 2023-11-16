@@ -1,4 +1,5 @@
 # van Emde Boas Tree
+
 - **Data structure:** van Emde Boas Tree.
 - **Language:** C++
 
@@ -15,6 +16,7 @@ The implementation is divided in two main versions:
 ### Execution
 
 Execute `test.sh` to run the automatic test tool. The bash script can receive parameters and options to customize the test.
+  
   - `in` : file containing a random generated input to be tested (file structure explained [below](#input))
   - `sol` : expected output
 
