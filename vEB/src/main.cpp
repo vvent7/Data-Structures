@@ -2,9 +2,11 @@
 #include "_veb_base.h"
 #include "veb_pre.h"
 #include "veb.h"
+#define _ ios_base::sync_with_stdio(0);cin.tie(0);cout.tie(0);
+#define endl '\n'
 using namespace std;
 
-int main(){
+int main(){_
   int u, n;
   cin>>u>>n;
 
@@ -15,8 +17,6 @@ int main(){
 
     if(op==1){ // insert
       cin>>x;
-      // cout<<"inserting "<<x<<": "<<std::flush;
-      
       cout<<veb->insert(x);
     }
     else if(op==2){ // remove

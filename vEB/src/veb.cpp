@@ -17,34 +17,28 @@ Veb::Veb(int u):
   summary = std::make_unique<Veb>(uSqrtUpper);
 
   cluster = std::make_unique<Veb[]>(uSqrtUpper);
-  for(int i=0; i<uSqrtUpper; i++){
-    // std::cout<<"hi"<<std::endl;
+  for(int i=0; i<uSqrtUpper; i++)
     cluster[i] = Veb(uSqrtLower);
-  }
-  
-  // std::cout<<this->u<<" "<<uSqrtUpper<<" "<<uSqrtLower<<std::endl;
 }
 
 bool Veb::insert(int x){
   if(mi == Veb::NIL) // empty set
     return (mi = mx = x), true;
 
-  if(x==mi){
-    std::cout<<"GOTCHA"<<std::endl;
-    return false; // already inserted
-  }
-  if(x < mi) std::swap(x, mi); // update minimum
+  if(x==mi) return false; // already inserted
 
-  std::cout<<u<<": "<<mi<<" "<<mx<<" "<<x<<" // ";
   bool inserted = false;
+  if(x < mi){ // update minimum
+    std::swap(x, mi);
+    inserted = true;
+  }
+
   if(u > 2){ // not a base case
     int i = high(x), j = low(x);
-    std::cout<<x<<" -> "<<i<<","<<j<<std::endl;
     if(cluster[i].minimum() == Veb::NIL)
       summary->insert(i);
     inserted = cluster[i].insert(j);
   }
-  else std::cout<<std::endl;
   if(x > mx) mx = x, inserted = true;
   return inserted;
 }

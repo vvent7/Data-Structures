@@ -4,6 +4,8 @@
 #include <set>
 #include <random>
 #include <cstring>
+#define _ ios_base::sync_with_stdio(0);cin.tie(0);cout.tie(0);
+#define endl '\n'
 using namespace std;
 
 //======================RANDOM======================
@@ -44,7 +46,7 @@ void gen_veb_test(int u, int n, string &filepathIn, string &filepathSol){
   sol.open(filepathSol);
   
   rand_init();
-  // cout<<"coroilho!!!\n";
+  
   input<<u<<" "<<n<<endl; //first line
   int insTimes = n/20; //at least 5% of insertions
   while(n--){
@@ -102,7 +104,7 @@ void gen_veb_test(int u, int n, string &filepathIn, string &filepathSol){
   }
 }
 
-int main(int argc, char** argv){
+int main(int argc, char** argv){_
   if(argc<5){
     // UNIVERSE SIZE, NUMBER OF QUERIES, INPUT filepath, SOLUTION filepath
     cout<<"Usage: "<<argv[0]<<" <universe size> <number of queries> <input filepath> <solution filepath>\n";
@@ -111,7 +113,6 @@ int main(int argc, char** argv){
 
   int u = atoi(argv[1]), n = atoi(argv[2]);
   string filepathIn = argv[3], filepathSol = argv[4];
-  cout<<u<<" "<<n<<" "<<filepathIn<<" "<<filepathSol<<endl;
   gen_veb_test(u, n, filepathIn, filepathSol);
 
   return 0;

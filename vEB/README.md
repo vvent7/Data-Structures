@@ -2,19 +2,19 @@
 - **Data structure:** van Emde Boas Tree.
 - **Language:** C++
 
-The implementation is divided in three main versions:
+The implementation is divided in two main versions:
 
 1. Preliminary (`veb_pre`): preliminary version of vEB tree. Implements basic concepts as binary size and bitwise manipulation for simplicity and speed, *summary* structure and all operations of vEB.
-2. Recursive (`veb_rec`): improvement of previous implementation, defining a recursive structure inside each cluster. This optimization speeds up the operations of the tree.
-3. Final (`veb`): further improvement of previous recursive implementation. These improvements aims to achieve the final complexity of $O(\log \log u)$ in the operations.
+<!-- 2. Recursive (`veb_rec`): improvement of previous implementation, defining a recursive structure inside each cluster. This optimization speeds up the operations of the tree. -->
+2. Final (`veb`): improvement of the recursive implementation. These improvements aims to achieve the final complexity of $O(\log \log u)$ in the operations.
 
-Furthermore, there is some variations of the cited implementations. Originally, **the **vEB** tree does not allow repeated keys** (like a `set`). So, for each version, there is an alternative version that **allows repeated keys** (like a `multiset`). These variations are named `multi_<name>`, where `<name>` is the name of the respective version.
+<!-- Furthermore, there is some variations of the cited implementations. Originally, **the **vEB** tree does not allow repeated keys** (like a `set`). So, for each version, there is an alternative version that **allows repeated keys** (like a `multiset`). These variations are named `multi_<name>`, where `<name>` is the name of the respective version. -->
 
 ## Testing
 
-### Generation
+### Execution
 
-Execute `gen_test.py` to generate `in` and `sol` files.
+Execute `test.sh` to run the automatic test tool. The bash script can receive parameters and options to customize the test.
   - `in` : file containing a random generated input to be tested (file structure explained [below](#input))
   - `sol` : expected output
 
@@ -27,13 +27,12 @@ Each operation line starts with an integer $op$, the operation type. Depending o
 
   - 1 $x$ : insert number $x$
   - 2 $x$ : delete number $x$
-  - 3 : get size
-  - 4 $x$ : check whether $x$ is in the structure (0 or 1)
-  - 5 $x$ : get the successor of x (-1 if none)
-  - 6 $x$ : get the predecessor of x (-1 if none)
-  - 7 : get the minimum (-1 if empty)
-  - 8 : get the maximum (-1 if empty)
-  - 9 : delete and get the minimum (-1 if empty)
+  - 3 $x$ : check whether $x$ is in the structure (0 or 1)
+  - 4 $x$ : get the successor of x (-1 if none)
+  - 5 $x$ : get the predecessor of x (-1 if none)
+  - 6 : get the minimum (-1 if empty)
+  - 7 : get the maximum (-1 if empty)
+  - 8 : delete and get the minimum (-1 if empty)
 
 ### Output
 
