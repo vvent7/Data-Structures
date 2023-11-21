@@ -49,10 +49,11 @@ IN_FILE=${IN_DIR}/veb.in
 SOL_FILE=${SOL_DIR}/veb.sol
 OUT_FILE=${OUT_DIR}/veb.out
 
-# loop ${QT_TESTS} times
-echo "Running Tests...(please wait)"
+
+echo -e "\nRunning Tests... (please wait)"
 PERCENTAGE=0
-echo "${PERCENTAGE}%"
+echo -ne "${PERCENTAGE}%"
+# loop ${QT_TESTS} times
 for (( i=1; i<=${QT_TESTS}; i++ ))
 do
   if [ "$HISTORY" = true ]; then
@@ -71,10 +72,12 @@ do
     AUX=$((i*100/${QT_TESTS}))
     if [ $AUX -gt $PERCENTAGE ]; then
       PERCENTAGE=$AUX
-      echo "${PERCENTAGE}%"
+      echo -ne "\r${PERCENTAGE}%"
     fi
   else
-    echo "TEST CASE ${i} FAILED"
+    echo -e "\nTEST CASE ${i} FAILED"
     exit 5
   fi
 done
+
+echo -e "\r100%\nAll tests passed!!!"

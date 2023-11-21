@@ -1,6 +1,5 @@
 #include <iostream>
 #include "_veb_base.h"
-#include "veb_pre.h"
 #include "veb.h"
 #define _ ios_base::sync_with_stdio(0);cin.tie(0);cout.tie(0);
 #define endl '\n'
