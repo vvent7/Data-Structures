@@ -50,6 +50,9 @@ SOL_FILE=${SOL_DIR}/veb.sol
 OUT_FILE=${OUT_DIR}/veb.out
 
 # loop ${QT_TESTS} times
+echo "Running Tests...(please wait)"
+PERCENTAGE=0
+echo "${PERCENTAGE}%"
 for (( i=1; i<=${QT_TESTS}; i++ ))
 do
   if [ "$HISTORY" = true ]; then
@@ -65,7 +68,11 @@ do
   ./${BIN_VEB} < ${IN_FILE} &> ${OUT_FILE}
 
   if cmp -s ${OUT_FILE} ${SOL_FILE}; then
-    echo "Test case ${i} passed"
+    AUX=$((i*100/${QT_TESTS}))
+    if [ $AUX -gt $PERCENTAGE ]; then
+      PERCENTAGE=$AUX
+      echo "${PERCENTAGE}%"
+    fi
   else
     echo "TEST CASE ${i} FAILED"
     exit 5
