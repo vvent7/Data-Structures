@@ -38,7 +38,11 @@ VebNodeInner::VebNodeInner(int u):
 
 VebNodeInner::~VebNodeInner(){
   if(summary!=nullptr) delete summary;
-  if(clusters!=nullptr) delete[] clusters;
+  if(clusters!=nullptr){
+    for(int i=0;i<uSqrtUpper;i++)
+      delete clusters[i];
+    delete[] clusters;
+  }
 }
 
 bool VebNodeInner::insert(int x){
