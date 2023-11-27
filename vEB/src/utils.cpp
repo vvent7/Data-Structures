@@ -21,3 +21,14 @@ int lower_sqrt(int x){
   x = first_power_of_2(x);
   return 1 << (x>>1);
 }
+
+
+inline int high(int x, int uSqrtLower){
+  return x/uSqrtLower;
+}
+inline int low(int x, int uSqrtLower){
+  return x%uSqrtLower;
+}
+inline int index(int x, int y, int uSqrtLower){
+  return x*uSqrtLower + y;
+}

@@ -1,6 +1,5 @@
 #include <iostream>
-#include "_veb_base.h"
-#include "veb.h"
+#include "veb_base/veb.h"
 #define _ ios_base::sync_with_stdio(0);cin.tie(0);cout.tie(0);
 #define endl '\n'
 using namespace std;
@@ -9,7 +8,7 @@ int main(){_
   int u, n;
   cin>>u>>n;
 
-  _veb_base *veb = new Veb(u);
+  Veb *veb = new Veb(u);
 
   while(n--){
     int op, x; cin>>op;
@@ -34,12 +33,15 @@ int main(){_
       cin>>x;
       cout<<veb->predecessor(x);
     }
-    else if(op==6) // minimum
+    else if(op==6){// minimum
       cout<<veb->minimum();
-    else if(op==7) // maximum
+    } 
+    else if(op==7){ // maximum
       cout<<veb->maximum();
-    else if(op==8) // extract min
+    }
+    else if(op==8){ // extract min
       cout<<veb->extract_min();
+    }
 
     cout<<endl;
   }
