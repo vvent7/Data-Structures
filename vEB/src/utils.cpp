@@ -1,5 +1,9 @@
 #include "utils.h"
 
+inline void deal_opt(unsigned long long *cnt, unsigned long long k){
+  if(cnt != nullptr) *cnt = k;
+}
+
 int msbi(int x){
   return x==0 ? -1 : 31 - __builtin_clz(x);
 }

@@ -1,3 +1,5 @@
+void deal_opt(unsigned long long *cnt, unsigned long long k);
+
 // most significant bit index
 int msbi(int x);
 

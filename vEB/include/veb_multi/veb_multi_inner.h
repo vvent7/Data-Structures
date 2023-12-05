@@ -2,6 +2,9 @@
 #define VEB_MULTI_INNER_H
 
 #include <climits>
+#include <variant>
+#include <memory>
+#include <veb_multi_leaf.h>
 #include "_veb_multi.h"
 
 // =============VebInner=============
@@ -9,16 +12,18 @@ class VebMultiInner : public _veb_multi{
 public:
   VebMultiInner();
   VebMultiInner(int u); //[0, u-1]
-  ~VebMultiInner() final override;
+  ~VebMultiInner() final override = default;
 
-  int minimum(int *cnt = nullptr) const final override;
-  int maximum(int *cnt = nullptr) const final override;
+  bool empty() const final override;
+  int minimum(unsigned long long *cnt = nullptr) const final override;
+  int maximum(unsigned long long *cnt = nullptr) const final override;
   int member(int x) const final override;
-  int successor(int x, int *cnt = nullptr) const final override;
-  int predecessor(int x, int *cnt = nullptr) const final override;
-  int insert(int x, int n = 1, int *cnt = nullptr) final override;
-  int remove(int x, int n = INT_MAX, int *cnt = nullptr) final override;
-  int extract_min(int *cnt = nullptr) final override;
+  int successor(int x, unsigned long long *cnt = nullptr) const final override;
+
+  int predecessor(int x, unsigned long long *cnt = nullptr) const final override;
+  unsigned long long insert(int x, unsigned long long n = 1, unsigned long long *cnt = nullptr) final override;
+  unsigned long long remove(int x, unsigned long long n = ULLONG_MAX, unsigned long long *cnt = nullptr) final override;
+  int extract_min(unsigned long long *cnt = nullptr) final override;
 
 private:
   int k, u, uSqrtUpper, uSqrtLower;
@@ -27,11 +32,12 @@ private:
   // uSqrtUpper: number of clusters (size of summary)
   // uSqrtLower: number of elements in each cluster (size of cluster)
 
-  int mi, mx;
-  int cntMi;
+  int mi, mx; //mi and mx are unique
+  unsigned long long cntMi, cntMx;
 
-  _veb_multi *summary;
-  _veb_multi **clusters;
+  //FIX THIS GOD DAMN THING
+  std::unique_ptr<_veb_multi> summary;
+  std::unique_ptr<std::unique_ptr<_veb_multi>[]> clusters;
 };
 // ==================================
 
