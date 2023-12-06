@@ -35,6 +35,8 @@ default_target: release
 .PHONY: release
 release: export CXXFLAGS := $(CXXFLAGS) $(COMPILE_FLAGS)
 release: dirs
+	@echo $(OBJECTS)
+	@echo $(INCLUDES)
 	@$(MAKE) all
 
 .PHONY: dirs
@@ -63,7 +65,7 @@ all: $(BIN_PATH)/$(BIN_NAME)
 # Creation of the executable
 $(BIN_PATH)/$(BIN_NAME): $(OBJECTS)
 	@echo "Linking: $@"
-	$(CXX) $(OBJECTS) -o $@ ${LIBS}
+	$(CXX) $(OBJECTS) -o $@ ${LIBS} $(INCLUDES)
 
 # Add dependency files, if they exist
 -include $(DEPS)

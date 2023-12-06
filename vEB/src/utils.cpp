@@ -1,6 +1,6 @@
 #include "utils.h"
 
-inline void deal_opt(unsigned long long *cnt, unsigned long long k){
+void deal_opt(unsigned long long *cnt, unsigned long long k){
   if(cnt != nullptr) *cnt = k;
 }
 
@@ -27,12 +27,12 @@ int lower_sqrt(int x){
 }
 
 
-inline int high(int x, int uSqrtLower){
+int high(int x, int uSqrtLower){
   return x/uSqrtLower;
 }
-inline int low(int x, int uSqrtLower){
+int low(int x, int uSqrtLower){
   return x%uSqrtLower;
 }
-inline int index(int x, int y, int uSqrtLower){
+int index(int x, int y, int uSqrtLower){
   return x*uSqrtLower + y;
 }

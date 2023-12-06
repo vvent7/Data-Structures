@@ -42,11 +42,11 @@ inline bool VebMultiInner::empty() const {
   return mi == _veb_multi::NIL;
 }
 
-int VebMultiInner::minimum(unsigned long long *cnt = nullptr) const {
+int VebMultiInner::minimum(unsigned long long *cnt) const {
   return deal_opt(cnt, cntMi), mi;
 }
 
-int VebMultiInner::maximum(unsigned long long *cnt = nullptr) const {
+int VebMultiInner::maximum(unsigned long long *cnt) const {
   return deal_opt(cnt, cntMx), mx;
 }
 
@@ -57,7 +57,7 @@ int VebMultiInner::member(int x) const {
   else return clusters[high(x, uSqrtLower)]->member(low(x, uSqrtLower));
 }
 
-int VebMultiInner::successor(int x, unsigned long long *cnt = nullptr) const {
+int VebMultiInner::successor(int x, unsigned long long *cnt) const {
   if(u<=2){
     return (x == 0 && mx == 1)
       ? (deal_opt(cnt, cntMx), mx)
@@ -89,7 +89,7 @@ int VebMultiInner::successor(int x, unsigned long long *cnt = nullptr) const {
   }
 }
 
-int VebMultiInner::predecessor(int x, unsigned long long *cnt = nullptr) const {
+int VebMultiInner::predecessor(int x, unsigned long long *cnt) const {
   if(u<=2){
     return (x == 1 && mi == 0)
       ? (deal_opt(cnt, cntMi), mi)
@@ -121,7 +121,7 @@ int VebMultiInner::predecessor(int x, unsigned long long *cnt = nullptr) const {
   }
 }
 
-unsigned long long VebMultiInner::insert(int x, unsigned long long n = 1, unsigned long long *cnt = nullptr){
+unsigned long long VebMultiInner::insert(int x, unsigned long long n, unsigned long long *cnt){
   if(empty())
     return (mi = mx = x), (cntMi = cntMx = n),
       deal_opt(cnt,n), n;
@@ -164,7 +164,7 @@ unsigned long long VebMultiInner::insert(int x, unsigned long long n = 1, unsign
     : (clusters[i]->insert(j, n), (swapped == 1 ? cntMi : cntMx)); // swapped
 }
 
-unsigned long long VebMultiInner::remove(int x, unsigned long long n = ULLONG_MAX, unsigned long long *cnt = nullptr){
+unsigned long long VebMultiInner::remove(int x, unsigned long long n, unsigned long long *cnt){
   if(empty() | (x < mi) | (x > mx)) return deal_opt(cnt, 0), 0;
   else if(mi == mx){ // only one element
     if(x != mi) return deal_opt(cnt, 0), 0;
@@ -212,7 +212,7 @@ unsigned long long VebMultiInner::remove(int x, unsigned long long n = ULLONG_MA
   return n;
 }
 
-int VebMultiInner::extract_min(unsigned long long *cnt = nullptr){
+int VebMultiInner::extract_min(unsigned long long *cnt){
   int x = mi;
   if(x != _veb_multi::NIL) remove(x, 1, cnt);
   else deal_opt(cnt, 0);

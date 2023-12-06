@@ -1,16 +1,15 @@
 #ifndef VEB_MULTI_H
 #define VEB_MULTI_H
 
-#include <cstddef>
-#include <climits>
-#include <utility>
-#include <memory>
+#include <climits> //MAX
+#include <memory> //unique_ptr
 #include "_veb_multi.h"
 
 // ==============VebMulti==============
 class VebMulti {
 public:
-  size_t size() const;
+  VebMulti();
+  VebMulti(int u); //[0, u-1]
   bool empty() const;
   int minimum(unsigned long long *cnt = nullptr) const; // value
   int maximum(unsigned long long *cnt = nullptr) const; // value
@@ -23,7 +22,6 @@ public:
 
 private:
   std::unique_ptr<_veb_multi> root;
-  size_t sz;
 };
 // ================================
 

@@ -1,6 +1,6 @@
 #include <algorithm>
-#include "veb_inner.h"
-#include "veb_leaf.h"
+#include "veb_base/veb_inner.h"
+#include "veb_base/veb_leaf.h"
 #include "utils.h"
 
 // ==========VebInner==========

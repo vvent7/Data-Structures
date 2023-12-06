@@ -4,8 +4,8 @@
 #include <climits>
 #include <variant>
 #include <memory>
-#include <veb_multi_leaf.h>
-#include "_veb_multi.h"
+#include "veb_multi/veb_multi_leaf.h"
+#include "veb_multi/_veb_multi.h"
 
 // =============VebInner=============
 class VebMultiInner : public _veb_multi{

@@ -1,7 +1,7 @@
 #include <algorithm>
 #include <memory>
-#include "_veb_multi.h"
-#include "veb_multi_leaf.h"
+#include "veb_multi/_veb_multi.h"
+#include "veb_multi/veb_multi_leaf.h"
 #include "utils.h"
 
 // ==========VebMultiLeaf==========
@@ -16,7 +16,7 @@ inline bool VebMultiLeaf::empty() const {
   return values == 0;
 }
 
-int VebMultiLeaf::minimum(unsigned long long *cnt = nullptr) const {
+int VebMultiLeaf::minimum(unsigned long long *cnt) const {
   if(empty()) return deal_opt(cnt, 0), _veb_multi::NIL;
 
   int x = __builtin_ffsll(values)-1;
@@ -24,7 +24,7 @@ int VebMultiLeaf::minimum(unsigned long long *cnt = nullptr) const {
   return deal_opt(cnt, cntValues[x]), x;
 }
 
-int VebMultiLeaf::maximum(unsigned long long *cnt = nullptr) const {
+int VebMultiLeaf::maximum(unsigned long long *cnt) const {
   if(empty()) return deal_opt(cnt, 0), _veb_multi::NIL;
 
   int x = _veb_multi::BASE_U - 1 - __builtin_clzll(values);
@@ -37,7 +37,7 @@ int VebMultiLeaf::member(int x) const {
   return cntValues[x];
 }
 
-int VebMultiLeaf::successor(int x, unsigned long long *cnt = nullptr) const {
+int VebMultiLeaf::successor(int x, unsigned long long *cnt) const {
   if(x >= u-1) return deal_opt(cnt, 0), _veb_multi::NIL;
   unsigned long long mask = ~((1ULL << (x+1)) - 1);
   unsigned long long succ = values & mask;
@@ -49,7 +49,7 @@ int VebMultiLeaf::successor(int x, unsigned long long *cnt = nullptr) const {
     : (deal_opt(cnt, cntValues[ans-1]), ans-1);
 }
 
-int VebMultiLeaf::predecessor(int x, unsigned long long *cnt = nullptr) const {
+int VebMultiLeaf::predecessor(int x, unsigned long long *cnt) const {
   if(x >= u) return deal_opt(cnt, 0), _veb_multi::NIL;
   unsigned long long mask = (1ULL << x) - 1;
   unsigned long long pred = values & mask;
@@ -57,11 +57,11 @@ int VebMultiLeaf::predecessor(int x, unsigned long long *cnt = nullptr) const {
   if(pred == 0) return deal_opt(cnt, 0), _veb_multi::NIL;
 
   int ans = __builtin_clzll(pred);
-  int x = _veb_multi::BASE_U - 1 - ans;
-  return deal_opt(cnt, cntValues[x]), x;
+  int predX = _veb_multi::BASE_U - 1 - ans;
+  return deal_opt(cnt, cntValues[predX]), predX;
 }
 
-unsigned long long VebMultiLeaf::insert(int x, unsigned long long n = 1, unsigned long long *cnt = nullptr){
+unsigned long long VebMultiLeaf::insert(int x, unsigned long long n, unsigned long long *cnt){
   if((x>=u) | (n<=0)) return deal_opt(cnt, 0), 0;
   
   values |= (1ULL << x);
@@ -71,7 +71,7 @@ unsigned long long VebMultiLeaf::insert(int x, unsigned long long n = 1, unsigne
   return deal_opt(cnt, cntValues[x]), n;
 }
 
-unsigned long long VebMultiLeaf::remove(int x, unsigned long long n = ULLONG_MAX, unsigned long long *cnt = nullptr){
+unsigned long long VebMultiLeaf::remove(int x, unsigned long long n, unsigned long long *cnt){
   if((x>=u) | (n<=0)) return deal_opt(cnt, 0), 0;
   
   n = std::min(n, cntValues[x]);
@@ -81,7 +81,7 @@ unsigned long long VebMultiLeaf::remove(int x, unsigned long long n = ULLONG_MAX
   return deal_opt(cnt, cntValues[x]), n;
 }
 
-int VebMultiLeaf::extract_min(unsigned long long *cnt = nullptr){
+int VebMultiLeaf::extract_min(unsigned long long *cnt){
   if(empty()) return deal_opt(cnt, 0), _veb_multi::NIL;
   int x = minimum();
   return remove(x, 1, cnt), x;
