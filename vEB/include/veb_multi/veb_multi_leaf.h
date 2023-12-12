@@ -3,10 +3,10 @@
 
 #include <climits> //MAX
 #include <memory> //unique_tr
-#include "_veb_multi.h"
+#include "_veb_multi_node.h"
 
 // =============VebInner=============
-class VebMultiLeaf : public _veb_multi{
+class VebMultiLeaf : public _veb_multi_node{
 public:
   VebMultiLeaf();
   VebMultiLeaf(int u); //[0, u-1]

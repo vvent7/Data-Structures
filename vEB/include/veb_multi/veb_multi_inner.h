@@ -5,10 +5,10 @@
 #include <variant>
 #include <memory>
 #include "veb_multi/veb_multi_leaf.h"
-#include "veb_multi/_veb_multi.h"
+#include "veb_multi/_veb_multi_node.h"
 
 // =============VebInner=============
-class VebMultiInner : public _veb_multi{
+class VebMultiInner : public _veb_multi_node{
 public:
   VebMultiInner();
   VebMultiInner(int u); //[0, u-1]
@@ -36,8 +36,8 @@ private:
   unsigned long long cntMi, cntMx;
 
   //FIX THIS GOD DAMN THING
-  std::unique_ptr<_veb_multi> summary;
-  std::unique_ptr<std::unique_ptr<_veb_multi>[]> clusters;
+  std::unique_ptr<_veb_multi_node> summary;
+  std::unique_ptr<std::unique_ptr<_veb_multi_node>[]> clusters;
 };
 // ==================================
 

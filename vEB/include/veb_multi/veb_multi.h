@@ -3,7 +3,7 @@
 
 #include <climits> //MAX
 #include <memory> //unique_ptr
-#include "_veb_multi.h"
+#include "_veb_multi_node.h"
 
 // ==============VebMulti==============
 class VebMulti {
@@ -21,7 +21,7 @@ public:
   int extract_min(unsigned long long *cnt = nullptr); // extractedValue
 
 private:
-  std::unique_ptr<_veb_multi> root;
+  std::unique_ptr<_veb_multi_node> root;
 };
 // ================================
 

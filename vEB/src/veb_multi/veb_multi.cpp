@@ -1,7 +1,7 @@
 #include <climits> //MAX
 #include <memory> //unique_ptr
 #include <climits> //MAX
-#include "veb_multi/_veb_multi.h"
+#include "veb_multi/_veb_multi_node.h"
 #include "veb_multi/veb_multi.h"
 #include "veb_multi/veb_multi_inner.h"
 #include "veb_multi/veb_multi_leaf.h"
@@ -10,7 +10,7 @@
 VebMulti::VebMulti():root(nullptr){}
 
 VebMulti::VebMulti(int u){
-  if(u > _veb_multi::BASE_U)
+  if(u > _veb_multi_node::BASE_U)
     root = std::make_unique<VebMultiInner>(u);
   else
     root = std::make_unique<VebMultiLeaf>(u);

@@ -7,7 +7,7 @@
 // ==========VebMultiInner==========
 VebMultiInner::VebMultiInner():
   k(0), u(0), uSqrtUpper(0), uSqrtLower(0),
-  mi(_veb_multi::NIL), mx(_veb_multi::NIL),
+  mi(_veb_multi_node::NIL), mx(_veb_multi_node::NIL),
   cntMi(0), cntMx(0),
   summary(nullptr), clusters(nullptr){}
 
@@ -16,19 +16,19 @@ VebMultiInner::VebMultiInner(int u):
   u(1<<k),
   uSqrtUpper(upper_sqrt(u)),
   uSqrtLower(lower_sqrt(u)),
-  mi(_veb_multi::NIL), mx(_veb_multi::NIL),
+  mi(_veb_multi_node::NIL), mx(_veb_multi_node::NIL),
   cntMi(0), cntMx(0){
 
   if(u <= 2) return; //leaf 2
 
-  clusters = std::make_unique<std::unique_ptr<_veb_multi>[]>(uSqrtUpper);
+  clusters = std::make_unique<std::unique_ptr<_veb_multi_node>[]>(uSqrtUpper);
 
-  if(uSqrtUpper > _veb_multi::BASE_U)
+  if(uSqrtUpper > _veb_multi_node::BASE_U)
     summary = std::make_unique<VebMultiInner>(uSqrtUpper);
   else
     summary = std::make_unique<VebMultiLeaf>(uSqrtUpper);
 
-  if(uSqrtLower > _veb_multi::BASE_U){
+  if(uSqrtLower > _veb_multi_node::BASE_U){
     for(int i=0; i<uSqrtUpper; i++)
       clusters[i] = std::make_unique<VebMultiInner>(uSqrtLower);
   }
@@ -39,7 +39,7 @@ VebMultiInner::VebMultiInner(int u):
 }
 
 inline bool VebMultiInner::empty() const {
-  return mi == _veb_multi::NIL;
+  return mi == _veb_multi_node::NIL;
 }
 
 int VebMultiInner::minimum(unsigned long long *cnt) const {
@@ -61,7 +61,7 @@ int VebMultiInner::successor(int x, unsigned long long *cnt) const {
   if(u<=2){
     return (x == 0 && mx == 1)
       ? (deal_opt(cnt, cntMx), mx)
-      : (deal_opt(cnt, 0), _veb_multi::NIL);
+      : (deal_opt(cnt, 0), _veb_multi_node::NIL);
   }
   else if(!empty() && x < mi)
     return deal_opt(cnt, cntMi), mi;
@@ -76,10 +76,10 @@ int VebMultiInner::successor(int x, unsigned long long *cnt) const {
       // successor is in the next cluster
       int succCluster = summary->successor(i);
 
-      if(succCluster == _veb_multi::NIL){
+      if(succCluster == _veb_multi_node::NIL){
         return (!empty() && x < mx)
           ? (deal_opt(cnt, cntMx), mx)
-          : (deal_opt(cnt, 0), _veb_multi::NIL);
+          : (deal_opt(cnt, 0), _veb_multi_node::NIL);
       }
       else{
         int offset = clusters[succCluster]->minimum();
@@ -93,7 +93,7 @@ int VebMultiInner::predecessor(int x, unsigned long long *cnt) const {
   if(u<=2){
     return (x == 1 && mi == 0)
       ? (deal_opt(cnt, cntMi), mi)
-      : (deal_opt(cnt, 0), _veb_multi::NIL);
+      : (deal_opt(cnt, 0), _veb_multi_node::NIL);
   }
   else if(!empty() && x > mx)
     return deal_opt(cnt, cntMx), mx;
@@ -108,10 +108,10 @@ int VebMultiInner::predecessor(int x, unsigned long long *cnt) const {
       // predecessor is in the previous cluster
       int predCluster = summary->predecessor(i);
 
-      if(predCluster == _veb_multi::NIL){
+      if(predCluster == _veb_multi_node::NIL){
         return (!empty() && x > mi)
           ? (deal_opt(cnt, cntMi), mi)
-          : (deal_opt(cnt, 0), _veb_multi::NIL);
+          : (deal_opt(cnt, 0), _veb_multi_node::NIL);
       }
       else{
         int offset = clusters[predCluster]->maximum();
@@ -169,7 +169,7 @@ unsigned long long VebMultiInner::remove(int x, unsigned long long n, unsigned l
   else if(mi == mx){ // only one element
     if(x != mi) return deal_opt(cnt, 0), 0;
     cntMi -= (n = std::min(n, cntMi));
-    if(cntMi == 0) mi = _veb_multi::NIL;
+    if(cntMi == 0) mi = _veb_multi_node::NIL;
     mx = mi; cntMx = cntMi;
     return deal_opt(cnt, cntMi), n;
   }
@@ -214,7 +214,7 @@ unsigned long long VebMultiInner::remove(int x, unsigned long long n, unsigned l
 
 int VebMultiInner::extract_min(unsigned long long *cnt){
   int x = mi;
-  if(x != _veb_multi::NIL) remove(x, 1, cnt);
+  if(x != _veb_multi_node::NIL) remove(x, 1, cnt);
   else deal_opt(cnt, 0);
   return x;
 }
