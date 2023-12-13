@@ -35,7 +35,6 @@ private:
   int mi, mx; //mi and mx are unique
   unsigned long long cntMi, cntMx;
 
-  //FIX THIS GOD DAMN THING
   std::unique_ptr<_veb_multi_node> summary;
   std::unique_ptr<std::unique_ptr<_veb_multi_node>[]> clusters;
 };

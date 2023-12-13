@@ -13,11 +13,18 @@ int main(){_
 
   VebData<key_container_vector_unordered> vebData(1e6, 1e6);
 
-  vebData.insert(1, 1);
+  cout<<vebData.insert(1, 1)<<endl;
   vebData.insert(2, 2);
-  vebData.insert(1,0);
-
-
+  vebData.insert(1, 0);
+  // 1: 1 0
+  // 2: 2
+  cout<<vebData.extract_min_data()<<endl;
+  vebData.insert(0, 3);
+  vebData.insert(1, 5);
+  cout<<vebData.extract_min_data()<<endl;
+  vebData.remove_key(1);
+  cout<<vebData.extract_min_data()<<endl;
+  cout<<vebData.empty()<<endl;
   // Veb *veb = new Veb(u);
 
   // while(n--){

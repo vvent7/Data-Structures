@@ -1,9 +1,9 @@
+#include <iostream>
 #include <vector>
 #include <utility> //pair
 #include <cstddef> //size_t
 #include <memory> //unique_ptr
 #include "veb_base/veb.h"
-// #include "key_container_vector.h"
 
 //key: INT, data: INT
 
@@ -21,9 +21,14 @@ public:
 
   VebData(int u, int maxData)
     : sz(0), u(u), maxData(maxData), veb(u),
-      keyContainers(std::make_unique<std::vector<KeyContainer>[]>(u)),
+      keyContainers(std::make_unique<KeyContainer[]>(u)),
       data2key(std::make_unique<int[]>(maxData+1)),
-      data2locator(std::make_unique<typename KeyContainer::Locator[]>(maxData+1)){}
+      data2locator(std::make_unique<typename KeyContainer::Locator[]>(maxData+1)){
+        for(int i=0;i<=maxData;i++){
+          data2key[i] = NIL;
+          data2locator[i] = KeyContainer::NIL_LOCATOR;
+        }
+      }
 
   size_t size() const { return sz; }
   bool empty() const { return sz == 0; }
@@ -112,7 +117,7 @@ private:
   size_t sz;
   int u, maxData;
   Veb veb;
-  std::unique_ptr<std::vector<KeyContainer>[]> keyContainers; //key -> data1, data2, data3...
+  std::unique_ptr<KeyContainer[]> keyContainers; //key -> data1, data2, data3...
   std::unique_ptr<int[]> data2key; //data -> key
   std::unique_ptr<typename KeyContainer::Locator []> data2locator; //DO NOT TOUCH (only for KeyContainer)
 };
