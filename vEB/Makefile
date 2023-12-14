@@ -8,7 +8,7 @@ TESTS_PATH = tests
 
 # executable # 
 BIN_NAME = veb
-BIN_TEST_GEN_NAME = gen
+BIN_TEST_GEN_NAME = gen_veb
 
 # extensions #
 SRC_EXT = cpp
@@ -85,6 +85,6 @@ tests: dirs $(BIN_PATH)/$(BIN_TEST_GEN_NAME)
 	@$(RM) $(TESTS_PATH)/$(BIN_TEST_GEN_NAME)
 	@ln -s $(CURDIR)/$(BIN_PATH)/$(BIN_TEST_GEN_NAME) $(CURDIR)/$(TESTS_PATH)/$(BIN_TEST_GEN_NAME)
 
-$(BIN_PATH)/$(BIN_TEST_GEN_NAME): $(TESTS_PATH)/test_gen.cpp
+$(BIN_PATH)/$(BIN_TEST_GEN_NAME): $(TESTS_PATH)/generators/$(BIN_TEST_GEN_NAME).$(SRC_EXT)
 	@echo "Compiling: $< -> $@"
-	$(CXX) $(CXXFLAGS) -o $(BIN_PATH)/$(BIN_TEST_GEN_NAME) $(TESTS_PATH)/test_gen.cpp
+	$(CXX) $(CXXFLAGS) -o $(BIN_PATH)/$(BIN_TEST_GEN_NAME) $(TESTS_PATH)/generators/$(BIN_TEST_GEN_NAME).$(SRC_EXT)

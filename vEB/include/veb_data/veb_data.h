@@ -1,9 +1,10 @@
-#include <iostream>
-#include <vector>
+#ifndef VEB_DATA_H
+#define VEB_DATA_H
+
 #include <utility> //pair
 #include <cstddef> //size_t
 #include <memory> //unique_ptr
-#include "veb_base/veb.h"
+#include "veb/veb.h" //Veb
 
 //key: INT, data: INT
 
@@ -11,7 +12,7 @@ template <typename KeyContainer>
 class VebData {
 // static_assert(std::is_base_of<Base, T>::value, "T must derive from Base");
 public:
-  static const int NIL = -1;
+  static constexpr int NIL = -1;
 
   VebData()
     : sz(0), u(0), maxData(0), veb(),
@@ -57,7 +58,7 @@ public:
       : std::make_pair(veb.maximum(), keyContainers[veb.maximum()].maximum());
   }
 
-  bool member_key(int key) const { return keyContainers[key].empty(); } //O(1)
+  bool member_key(int key) const { return !keyContainers[key].empty(); } //O(1)
   bool member_data(int data) const { return data2key[data]!=NIL; } //O(1)
   bool member(int key, int data) const { return data2key[data]==key; } //O(1)
 
@@ -66,11 +67,11 @@ public:
 
   int successor_key(int key) const {
     int succ = veb.successor(key);
-    return succ == _veb::NIL ? NIL : succ;
+    return succ == Veb::NIL ? NIL : succ;
   }
   int predecessor_key(int key) const {
     int pred = veb.predecessor(key);
-    return pred == _veb::NIL ? NIL : pred;
+    return pred == Veb::NIL ? NIL : pred;
   }
 
   bool insert(int key, int data){
@@ -99,8 +100,15 @@ public:
     sz--;
     return true;
   }
+  
+  bool change_key(int data, int newKey){
+    if(!remove_data(data)) return false;
+    return insert(newKey, data);
+  }
 
-
+  int extract_min_key(){
+    return extract_min().first;
+  }
   int extract_min_data(){
     return extract_min().second;
   }
@@ -121,3 +129,5 @@ private:
   std::unique_ptr<int[]> data2key; //data -> key
   std::unique_ptr<typename KeyContainer::Locator []> data2locator; //DO NOT TOUCH (only for KeyContainer)
 };
+
+#endif

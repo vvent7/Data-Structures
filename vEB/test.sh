@@ -20,7 +20,7 @@ make tests
 
 # paths and files
 TESTS_PATH=tests
-BIN_GEN=${TESTS_PATH}/gen
+BIN_GEN=${TESTS_PATH}/gen_veb
 IN_DIR=${TESTS_PATH}/in
 SOL_DIR=${TESTS_PATH}/sol
 OUT_DIR=${TESTS_PATH}/out
@@ -65,19 +65,19 @@ do
   # generate test case
   ./${BIN_GEN} ${IN_U} ${IN_N} ${IN_FILE} ${SOL_FILE}
 
-  #  # run testcase and save output
-  # ./${BIN_VEB} < ${IN_FILE} &> ${OUT_FILE}
+   # run testcase and save output
+  ./${BIN_VEB} < ${IN_FILE} &> ${OUT_FILE}
 
-  # if cmp -s ${OUT_FILE} ${SOL_FILE}; then
-  #   AUX=$((i*100/${QT_TESTS}))
-  #   if [ $AUX -gt $PERCENTAGE ]; then
-  #     PERCENTAGE=$AUX
-  #     echo -ne "\r${PERCENTAGE}%"
-  #   fi
-  # else
-  #   echo -e "\nTEST CASE ${i} FAILED"
-  #   exit 5
-  # fi
+  if cmp -s ${OUT_FILE} ${SOL_FILE}; then
+    AUX=$((i*100/${QT_TESTS}))
+    if [ $AUX -gt $PERCENTAGE ]; then
+      PERCENTAGE=$AUX
+      echo -ne "\r${PERCENTAGE}%"
+    fi
+  else
+    echo -e "\nTEST CASE ${i} FAILED"
+    exit 5
+  fi
 done
 
 echo -e "\r100%\nAll tests passed!!!"

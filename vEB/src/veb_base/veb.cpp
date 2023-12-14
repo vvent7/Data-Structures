@@ -1,9 +1,9 @@
 #include <cstddef>
 #include <memory>
-#include "veb_base/_veb.h"
-#include "veb_base/veb_inner.h"
-#include "veb_base/veb_leaf.h"
-#include "veb_base/veb.h"
+#include "veb/_veb_node.h"
+#include "veb/veb_inner.h"
+#include "veb/veb_leaf.h"
+#include "veb/veb.h"
 #include "utils.h"
 
 // =============Veb===============
@@ -11,7 +11,7 @@ Veb::Veb():
   root(nullptr), sz(0){}
 
 Veb::Veb(int u){
-  if(u > _veb::BASE_U)
+  if(u > _veb_node::BASE_U)
     root = std::make_unique<VebInner>(u);
   else
     root = std::make_unique<VebLeaf>(u);
@@ -51,7 +51,7 @@ bool Veb::remove(int x){
 
 int Veb::extract_min(){
   int x = root->extract_min();
-  if(x != _veb::NIL) sz--;
+  if(x != _veb_node::NIL) sz--;
   return x;
 }
 // =================================
