@@ -57,7 +57,7 @@ namespace pred_bitset {
 
     bool member_key(key_bit_t key) const { return !containers[key].empty(); } //O(1)
     bool member_data(data_t data) const { return data2containerLoc[data]!=NIL_KEY_BIT; } //O(1)
-    bool member(key_bit_t key, data_t data) const { return data2containerLoc[data]==key; } //O(1)
+    bool member(data_t data, key_bit_t key) const { return data2containerLoc[data]==key; } //O(1)
 
     key_bit_t get_key(data_t data) const { return data2containerLoc[data]; }
     const DataContainer& get_key_container(key_bit_t key) const { return containers[key]; }
@@ -97,13 +97,13 @@ namespace pred_bitset {
       return true;
     }
     
-    bool change_key(data_t data, key_bit_t newKey){
+    bool change_key(key_bit_t newKey, data_t data){
       if(!remove_data(data)) return false;
       return insert(newKey, data);
     }
-    bool decrease_key(data_t data, key_bit_t newKey){
+    bool decrease_key(key_bit_t newKey, data_t data){
       if(get_key(data) <= newKey) return false;
-      return change_key(data, newKey);
+      return change_key(newKey, data);
     }
 
     data_t extract_min_data(key_bit_t key){
@@ -125,13 +125,13 @@ namespace pred_bitset {
     }
     data_t extract_min_data(){
       return extract_min().second;
-    }    
+    }
 
   private:
     size_t sz;
     key_bit_t maxKey;
     data_t maxData;
-    Set predBs;
+    pred_bitset::Set predBs;
     std::unique_ptr<DataContainer[]> containers; //key -> data1, data2, data3...
     std::unique_ptr<ContainerLocator[]> data2containerLoc; //data -> key (index)
     std::unique_ptr<typename DataContainer::DataLocator []> data2dataLoc; //(only for DataContainer)

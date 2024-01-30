@@ -28,6 +28,9 @@ namespace pred_list{
             data2containerLoc[i] = NIL_LOC;
         }
     
+    Data(key_real_t maxKey, data_t maxData)
+      : Data(maxData) {}
+    
     size_t size() const { return sz; }
     bool empty() const { return sz == 0; }
 
@@ -106,13 +109,13 @@ namespace pred_list{
       return true;
     }
 
-    bool change_key(data_t data, key_real_t newKey){
+    bool change_key(key_real_t newKey, data_t data){
       if(!remove_data(data)) return false;
       return insert(newKey, data);
     }
-    bool decrease_key(data_t data, key_real_t newKey){
+    bool decrease_key(key_real_t newKey, data_t data){
       if(get_key(data) <= newKey) return false;
-      return change_key(data, newKey);
+      return change_key(newKey, data);
     }
 
     std::pair<key_real_t,data_t> extract_min(){

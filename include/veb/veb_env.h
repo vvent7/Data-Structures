@@ -1,12 +1,13 @@
 #ifndef VEB_ENV_H
 #define VEB_ENV_H
 
+#include <climits> // __CHAR_BIT__
 #include "env.h"
 
 namespace veb{
   using namespace env;
   
-  extern const key_bit_t BASE_U;
+  static constexpr key_bit_t BASE_U = sizeof(unsigned long long) * __CHAR_BIT__;
 
   // 2 ^ ceil(log(first_power_of_2(x))/2)
   unsigned int upper_sqrt(unsigned int x);

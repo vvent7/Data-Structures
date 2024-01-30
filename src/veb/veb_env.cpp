@@ -3,8 +3,7 @@
 #include "utils.h"
 
 namespace veb{
-  const key_bit_t BASE_U = sizeof(unsigned long long) * __CHAR_BIT__;
-
+  
   unsigned int upper_sqrt(unsigned int x){
     x = utils::lower_bound_pow2(x);
     return 1U << ((x+1)>>1);

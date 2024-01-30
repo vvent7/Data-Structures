@@ -1,11 +1,12 @@
 #ifndef CIRCULAR_H
 #define CIRCULAR_H
 
+#include<iostream>
 #include <utility> //pair
 #include <cstddef> //size_t
 #include "env.h"
 
-  using namespace env;
+using namespace env;
 template <typename Container>
 class Circular {
 public:
@@ -63,7 +64,10 @@ public:
     return container.predecessor_key(key);
   }
 
-  bool insert(key_bit_t key, data_t data){
+  bool insert(key_real_t key, data_t data){
+    // if(key > maxJump) key-=maxJump+1; //the maximum overflow is 1 cycle
+    key %= (maxJump + 1);
+
     if(!container.insert(key, data)) return false;
     if(isLess(mx,key)) mx = key; //mx < key (updating max)
     if(isLess(key,mi)) mi = key; //key < mi (updating min)
@@ -77,16 +81,22 @@ public:
     return container.remove_data(data);
   }
   
-  bool change_key(data_t data, key_bit_t newKey){
-    bool changed = container.change_key(data, newKey);
+  bool change_key(key_bit_t newKey, data_t data){
+    bool changed = container.change_key(newKey, data);
     if(changed){
       if(isLess(newKey,mi)) mi = newKey; //newKey < mi (updating min
       if(isLess(mx,newKey)) mx = newKey; //mx < newKey (updating max)
     }
     return changed;
   }
-  bool decrease_key(data_t data, key_bit_t newKey){
-    bool changed = container.decrease_key(data, newKey);
+  bool decrease_key(key_real_t newKey, data_t data){
+    // if(newKey > maxJump) newKey-=maxJump+1; //the maximum overflow is 1 cycle
+    newKey %= (maxJump + 1);
+    
+    key_bit_t oldKey = container.get_key(data);
+    if(oldKey == NIL_KEY_BIT || !isLess(newKey,oldKey)) return false;
+
+    bool changed = container.change_key(newKey, data);
     if(changed && isLess(newKey,mi)) mi = newKey; //newKey < mi (updating min)
     return changed;
   }

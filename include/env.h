@@ -6,9 +6,9 @@ namespace env{
   using key_bit_t = unsigned int;
   using data_t = unsigned int;
 
-  extern const key_real_t NIL_KEY_REAL;
-  extern const key_bit_t NIL_KEY_BIT;
-  extern const data_t NIL_DATA; 
+  static constexpr key_real_t NIL_KEY_REAL = -1;
+  static constexpr key_bit_t NIL_KEY_BIT = -1;
+  static constexpr data_t NIL_DATA = -1;
 }
 
 #endif

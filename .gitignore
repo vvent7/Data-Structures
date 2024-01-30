@@ -35,6 +35,7 @@
 .vscode
 
 build
-a
-out
-outdata
+config
+datasets
+old
+queries
