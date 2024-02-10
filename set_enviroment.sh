@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 #execute this with source
 
 export RSPP_ROOT=$(pwd)/

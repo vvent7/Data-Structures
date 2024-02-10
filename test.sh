@@ -2,7 +2,7 @@
 
 make clean
 make
-. set_enviroment.bash
+. set_enviroment.sh
 path="out"
 ./"$path"/run_dataset.sh > "$path"/in
 g++ "$path"/process.cpp -o "$path"/pcs

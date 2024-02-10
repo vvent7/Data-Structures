@@ -23,7 +23,7 @@ BINARIES = $(MAINS:$(MAIN_PATH)/%.$(SRC_EXT)=$(BIN_PATH)/%)
 DEPS = $(OBJECTS:.o=.d)
 
 # flags #
-COMPILE_FLAGS = -O2 -std=c++20 -DLOCAL -g
+COMPILE_FLAGS = -O3 -std=c++20 -DLOCAL -g
 INCLUDES = -I include/ -I /usr/local/include
 # Space-separated pkg-config libraries used by this project
 LIBS =

@@ -1,6 +1,5 @@
 #!/usr/bin/env bash
 
-
 path="datasets"
 curdir=$(pwd)
 datasets="${curdir}/datasets"
@@ -17,4 +16,3 @@ find "$path" -type f -print | sort | while read -r arquivo;
             ./build/bin/rauction
             ./build/bin/rauction-v2
     done
-

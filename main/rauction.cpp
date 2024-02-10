@@ -24,7 +24,7 @@ void rauction(auto &fs, const auto &bs, auto &tr, auto &dr, auto &pr, vertex_t s
     vector<vertex_t> ps(n, NIL_VERTEX);
 
     vector<set<tuple<ll, ll, ll>>> bid(n); // ps + w
-    pq_t q(c,n);
+    pq_t q(3*c,n);
     
     auto create_fs_bids = [&](vertex_t i) {
         for(auto [j, c] : fs[i]) {
@@ -145,7 +145,6 @@ signed main() {__
 
         timer otimer;
         rauction(fs, bs, tr, d, p, s, c);
-
         print_output(reader.get("type"), d, p, otimer);
     }
     return 0;

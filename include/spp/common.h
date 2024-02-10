@@ -15,7 +15,10 @@ namespace spp {
   using namespace std;
   
   //===================TYPES===================
-  using pq_t = pqueue_bintree_t;
+  using pq_t = pqueue_pred_bitset_t; //1
+  // using pq_t = pqueue_veb_t;      //2
+  // using pq_t = pqueue_bintree_t;  //3
+  // using pq_t = pqueue_pred_list_t; //very slow (no need to test)
   using vw_t = pair<vertex_t, weight_t>;
   using list_vw_t = list<vw_t>;
   using graph_t = vector<list_vw_t>;

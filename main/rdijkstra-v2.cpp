@@ -29,13 +29,14 @@ void rdijkstra(const auto &adj, const auto &tr, auto &dr, auto &pr, vertex_t s, 
     vector<vertex_t> porder;
     get_post_order(tr, porder, s);
     
-    pq_t q(c,n);
     for(vertex_t i : porder) {
         ds[i] = dr[i] - dr[s];
         ps[i] = pr[i];
         erase_bs(i);
+        if(ds[i]>c) c=ds[i]; //getting biggest change
     }
 
+    pq_t q(c,n); //building structure
     for(vertex_t i : porder) {
         for(auto [j, w] : adj[i]) {
             if(!vis[j]) {

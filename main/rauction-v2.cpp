@@ -28,7 +28,7 @@ void rauction(const auto &fs, auto &tr, auto &dr, auto &pr, vertex_t s, weight_t
 
     vector<ll> best_bid(n);
     vector<vector<tuple<ll, ll, ll>>> bid(n); // ps + w
-    pq_t q(c,n);
+    pq_t q(3*c,n);
     
     auto create_fs_bids = [&](vertex_t i) {
         for(auto [j, c] : fs[i]) {

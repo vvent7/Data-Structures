@@ -125,6 +125,7 @@ namespace spp{
       default: break;
     }
 
+    adj = graph_t(adj); //self-copy (optimize)
     return res;
   }
   //==================================================
